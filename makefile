@@ -1,7 +1,9 @@
 CC= gcc -nostdlib -Wall
 
+OBJS= bin/internal/crt0.o bin/internal/syscall.o \
+      bin/unistd/write.o bin/unistd/read.o
 
-bin/plibc.a: bin/crt0.o bin/syscall.o bin/unistd.o
+bin/plibc.a: $(OBJS)
 	ar cr bin/plibc.a $?
 
 bin/%.o: src/%.c | bin
@@ -11,7 +13,7 @@ bin/%.o: src/%.s | bin
 	as $< -o $@
 
 bin:
-	mkdir bin
+	mkdir -p bin/internal bin/unistd
 
 .PHONY: clean
 

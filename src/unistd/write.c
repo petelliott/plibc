@@ -1,5 +1,5 @@
 /*
-provides implementations of unistd.h functions
+unistd.h write syscall
 Copyright (C) 2017  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify
@@ -16,11 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <unistd.h>
-#include "syscall.h"
-
-ssize_t read(int fd, void * buf, size_t count) {
-    return _plibc_syscall(0, fd, buf, count);
-}
+#include "../syscall.h"
 
 ssize_t write(int fd, const void * buf, size_t count) {
     return _plibc_syscall(1, fd, buf, count);
