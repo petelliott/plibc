@@ -1,5 +1,5 @@
 /*
-the _plibc_syscall function that makes syscalls available in c
+provides implementations of unistd.h functions
 Copyright (C) 2017  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify
@@ -15,19 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <unistd.h>
+#include "syscall.h"
 
-.text
+ssize_t read(int fd, void * buf, size_t count) {
+    return _plibc_syscall(0, fd, buf, count);
+}
 
-.globl _plibc_syscall
-
-
-_plibc_syscall:
-    mov %rdi, %rax  # syscall_num
-    mov %rsi, %rdi  # syscall arg 0
-    mov %rdx, %rsi  # syscall arg 1
-    mov %rcx, %rdx  # syscall arg 2
-    mov %r8, %r10   # syscall arg 3
-    mov %r9, %r8    # syscall arg 4
-    mov (%rsp), %r9 # syscall arg 5
-    syscall         # make the syscall
-    ret
+ssize_t write(int fd, const void * buf, size_t count) {
+    return _plibc_syscall(1, fd, buf, count);
+}

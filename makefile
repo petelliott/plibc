@@ -1,7 +1,7 @@
 CC= gcc -nostdlib -Wall
 
 
-bin/plibc.a: bin/crt0.o bin/syscall.o
+bin/plibc.a: bin/crt0.o bin/syscall.o bin/unistd.o
 	ar cr bin/plibc.a $?
 
 bin/%.o: src/%.c | bin
