@@ -6,7 +6,7 @@ under GPLv3.
 ## using
 `$ gcc -nostdlib {{your files}} /path/to/plibc.a`
 
-## list of implimented functions
+## list of implemented functions
 
 #### fcntl.h
 
