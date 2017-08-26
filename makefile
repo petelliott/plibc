@@ -1,8 +1,9 @@
 CC= gcc -nostdlib -Wall
 
 OBJS= bin/internal/crt0.o bin/internal/syscall.o \
-      bin/unistd/write.o bin/unistd/read.o bin/unistd/brk.o \
-	  bin/stdlib/exit.o bin/stdlib/atoi.o bin/stdlib/malloc.o
+      bin/unistd/write.o bin/unistd/read.o bin/unistd/brk.o bin/unistd/close.o \
+	  bin/stdlib/exit.o bin/stdlib/atoi.o bin/stdlib/malloc.o \
+	  bin/fcntl/open.o
 
 bin/plibc.a: $(OBJS)
 	ar cr bin/plibc.a $?
@@ -14,7 +15,7 @@ bin/%.o: src/%.s | bin
 	as $< -o $@
 
 bin:
-	mkdir -p bin/internal bin/unistd bin/stdio bin/stdlib
+	mkdir -p bin/internal bin/unistd bin/stdio bin/stdlib bin/fcntl
 
 .PHONY: clean
 
