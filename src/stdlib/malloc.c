@@ -100,8 +100,19 @@ void *malloc (size_t size) {
 
 
 /*
-    TODO: implement block merging
+    merges a block its next block.
+    should only be called when both blocks are free
 */
+void block_merge_next(struct block *mblock) {
+    mblock->len = (long)mblock->next - (long)mblock + mblock->next->len;
+    mblock->next = mblock->next->next;
+    if (mblock->next != NULL) {
+        mblock->next->prev = mblock;
+    }
+}
+
+
+
 void free (void *ptr) {
     if (ptr == NULL) {
         // free is required to handle NULL pointers;
@@ -112,5 +123,13 @@ void free (void *ptr) {
     // check that ptr came from malloc()
     if ((((long) mblock) ^ mblock->pos_mag) == MALLOC_MAG) {
         mblock->used = 0;
+
+        if (mblock->next != NULL && !mblock->next->used) {
+            block_merge_next(mblock);
+        }
+
+        if (mblock->prev != NULL && !mblock->prev->used) {
+            block_merge_next(mblock->prev);
+        }
     }
 }
