@@ -36,6 +36,10 @@ void *sbrk (intptr_t delta) {
         brk(NULL);
     }
 
+    if (delta == 0) { // avoid a syscall if possible
+        return currbrk;
+    }
+
     void * oldbrk = currbrk;
     brk(currbrk+delta);
     return oldbrk;
