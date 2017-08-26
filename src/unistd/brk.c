@@ -22,6 +22,7 @@ void * currbrk = 0;
 
 
 int brk (void *addr) {
+    // the brk syscall and function call return different things
     currbrk = (void *) _plibc_syscall(12, addr);
     if (currbrk < addr) {
         //TODO: set errno to ENOMEM

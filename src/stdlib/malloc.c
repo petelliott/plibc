@@ -31,9 +31,13 @@ struct block {
     uint32_t used;    // this could be one byte but we need to preserve 8 byte alignment
 };
 
-struct block *base = NULL;
+struct block *base = NULL; // the tail of the blocks linked list
 
 
+/*
+    expands the data segment and inserts a new block of size
+    used when no freed block can be found
+*/
 struct block *push_block(size_t size) {
     void *start = sbrk(0);
     // we need to make sure that our blocks are aligned.
@@ -63,7 +67,7 @@ struct block *push_block(size_t size) {
 
 
 /*
-    finds a free block of atleast size.
+    finds a free block of at least size.
     TODO: implement block splitting
 */
 struct block *get_free_block(size_t size) {
@@ -104,6 +108,7 @@ void *malloc (size_t size) {
     should only be called when both blocks are free
 */
 void block_merge_next(struct block *mblock) {
+    // accounting for padding between end of one block and the start of another
     mblock->len = (long)mblock->next - (long)mblock + mblock->next->len;
     mblock->next = mblock->next->next;
     if (mblock->next != NULL) {
