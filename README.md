@@ -9,8 +9,11 @@ under GPLv3.
 ## list of implemented functions
 
 #### fcntl.h
-
 - open()
+
+#### signal.h
+- kill()
+- raise()
 
 #### stdlib.h
 - atoi()
@@ -26,5 +29,6 @@ under GPLv3.
 - brk()
 - sbrk()
 - close()
+- getpid()
 - read()
 - write()
