@@ -18,6 +18,9 @@ under GPLv3.
 - malloc()
 - free()
 
+#### string.h
+- memcpy();
+
 #### unistd.h
 - brk()
 - sbrk()
