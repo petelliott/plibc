@@ -19,7 +19,8 @@ under GPLv3.
 - free()
 
 #### string.h
-- memcpy();
+- memcpy()
+- strlen()
 
 #### unistd.h
 - brk()

@@ -4,7 +4,7 @@ OBJS= bin/internal/crt0.o bin/internal/syscall.o \
       bin/unistd/write.o bin/unistd/read.o bin/unistd/brk.o bin/unistd/close.o \
 	  bin/stdlib/exit.o bin/stdlib/atoi.o bin/stdlib/malloc.o \
 	  bin/fcntl/open.o \
-	  bin/string/memcpy.o
+	  bin/string/memcpy.o bin/string/strlen.o
 
 bin/plibc.a: $(OBJS)
 	ar cr bin/plibc.a $?
