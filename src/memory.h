@@ -15,10 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef _MALLOC_H
-#define _MALLOC_H
+#ifndef _MEMORY_H
+#define _MEMORY_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 #define MALLOC_MAG 0x8a05e5ad623cc4e
 #define MIN_SPLIT_SIZE 128 //must be larger than 40 or sizeof(struct block)+8
@@ -32,5 +33,10 @@ struct block {
 };
 
 extern struct block *base; // the tail of the blocks linked list
+
+struct block *push_block(size_t size);
+int shrink_block(struct block *mblock, size_t size);
+struct block *get_free_block(size_t size);
+void block_merge_next(struct block *mblock);
 
 #endif

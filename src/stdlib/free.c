@@ -16,22 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <stdlib.h>
-#include "../malloc.h"
-
-
-/*
-    merges a block its next block.
-    should only be called when both blocks are free
-*/
-void block_merge_next(struct block *mblock) {
-    // accounting for padding between end of one block and the start of another
-    mblock->len = (uint64_t)mblock->next - (uint64_t)mblock + mblock->next->len;
-    mblock->next = mblock->next->next;
-    if (mblock->next != NULL) {
-        mblock->next->prev = mblock;
-    }
-}
-
+#include "../memory.h"
 
 
 void free (void *ptr) {
