@@ -18,12 +18,14 @@ under GPLv3.
 #### stdlib.h
 - abort()
 - atoi()
+- bsearch()
 - exit()
 - malloc()
 - free()
 
 #### string.h
 - memcpy()
+- memset()
 - strlen()
 
 #### unistd.h

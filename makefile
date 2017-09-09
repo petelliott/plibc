@@ -2,7 +2,7 @@ CC= gcc -nostdlib -Wall
 
 OBJS= bin/internal/crt0.o bin/internal/syscall.o \
       bin/unistd/write.o bin/unistd/read.o bin/unistd/brk.o bin/unistd/close.o bin/unistd/getpid.o \
-	  bin/stdlib/exit.o bin/stdlib/atoi.o bin/stdlib/malloc.o bin/stdlib/abort.o \
+	  bin/stdlib/exit.o bin/stdlib/atoi.o bin/stdlib/malloc.o bin/stdlib/abort.o bin/stdlib/bsearch.o \
 	  bin/fcntl/open.o \
 	  bin/string/memcpy.o bin/string/strlen.o bin/string/memset.o \
 	  bin/signal/kill.o bin/signal/raise.o
