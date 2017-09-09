@@ -1,5 +1,5 @@
 /*
-malloc and free
+malloc
 Copyright (C) 2017  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <stdlib.h>
-#include <stdint.h>
 #include <unistd.h>
 #include "../align.h"
+#include "../malloc.h"
 
-#define MALLOC_MAG 0x8a05e5ad623cc4e
 
-#define MIN_SPLIT_SIZE 128 //must be larger than 40 or sizeof(struct block)+8
-
-struct block {
-    struct block *prev;
-    struct block *next;
-    uint64_t pos_mag; // position dependant magic number
-    uint32_t len;     // length of the block
-    uint32_t used;    // this could be one byte but we need to preserve 8 byte alignment
-};
-
-struct block *base = NULL; // the tail of the blocks linked list
+struct block *base = NULL;
 
 
 /*
@@ -132,41 +121,4 @@ void *malloc (size_t size) {
         mblock = push_block(size);
     }
     return mblock + 1; // skip to the useable memory
-}
-
-
-/*
-    merges a block its next block.
-    should only be called when both blocks are free
-*/
-void block_merge_next(struct block *mblock) {
-    // accounting for padding between end of one block and the start of another
-    mblock->len = (uint64_t)mblock->next - (uint64_t)mblock + mblock->next->len;
-    mblock->next = mblock->next->next;
-    if (mblock->next != NULL) {
-        mblock->next->prev = mblock;
-    }
-}
-
-
-
-void free (void *ptr) {
-    if (ptr == NULL) {
-        // free is required to handle NULL pointers;
-        return;
-    }
-
-    struct block *mblock = ((struct block *) ptr) -1;
-    // check that ptr came from malloc()
-    if ((((long) mblock) ^ mblock->pos_mag) == MALLOC_MAG) {
-        mblock->used = 0;
-
-        if (mblock->next != NULL && !mblock->next->used) {
-            block_merge_next(mblock);
-        }
-
-        if (mblock->prev != NULL && !mblock->prev->used) {
-            block_merge_next(mblock->prev);
-        }
-    }
 }

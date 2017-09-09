@@ -20,8 +20,9 @@ under GPLv3.
 - atoi()
 - bsearch()
 - exit()
-- malloc()
 - free()
+- malloc()
+
 
 #### string.h
 - memcpy()
