@@ -1,5 +1,5 @@
 /*
-malloc and free 
+malloc and free
 Copyright (C) 2017  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>
 
 #define MALLOC_MAG 0x8a05e5ad623cc4e
+
+#define MIN_SPLIT_SIZE 128 //must be larger than 40 or sizeof(struct block)+8
 
 #define align8(i) ((8 - (((long) i) % 8)) % 8)
 
@@ -67,13 +69,44 @@ struct block *push_block(size_t size) {
 
 
 /*
+    splits a given block in two if possible,
+    the first one being size.
+    returns 1 if split 0 if not
+*/
+int shrink_block(struct block *mblock, size_t size) {
+    if (mblock->len - size >= MIN_SPLIT_SIZE) {
+        struct block *block_new = (struct block *)((char *)(mblock+1) + size);
+        block_new = (struct block *)((char *)block_new + align8(block_new));
+
+        block_new->prev    = mblock;
+        block_new->next    = mblock->next;
+        block_new->pos_mag = MALLOC_MAG ^ ((long) block_new);
+        block_new->len     = (uint64_t)mblock + mblock->len - (uint64_t)block_new;
+        block_new->used    = 0;
+
+        if (mblock == base) {
+            base = block_new;
+        }
+
+        if (mblock->next != NULL) {
+            mblock->next->prev = block_new;
+        }
+        mblock->next = block_new;
+        mblock->len = size;
+        return 1;
+    }
+    return 0;
+}
+
+
+/*
     finds a free block of at least size.
-    TODO: implement block splitting
 */
 struct block *get_free_block(size_t size) {
     struct block *curr = base;
     while (curr != NULL) {
         if (!curr->used && curr->len >= size) {
+            shrink_block(curr, size);
             curr->used = 1;
             return curr;
         }
@@ -109,7 +142,7 @@ void *malloc (size_t size) {
 */
 void block_merge_next(struct block *mblock) {
     // accounting for padding between end of one block and the start of another
-    mblock->len = (long)mblock->next - (long)mblock + mblock->next->len;
+    mblock->len = (uint64_t)mblock->next - (uint64_t)mblock + mblock->next->len;
     mblock->next = mblock->next->next;
     if (mblock->next != NULL) {
         mblock->next->prev = mblock;
