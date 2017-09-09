@@ -1,5 +1,5 @@
 /*
-memcpy
+macros for calculating alignment
 the _plibc_syscall function that makes syscalls available in c
 Copyright (C) 2017  Peter Elliott
 
@@ -16,37 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <string.h>
-#include "../align.h"
+#ifndef _ALIGN_H
+#define _ALIGN_H
+#include <stdint.h>
 
+#define align2(i) ((2 - (((uint64_t) i) % 2)) % 2)
+#define align4(i) ((4 - (((uint64_t) i) % 4)) % 4)
+#define align8(i) ((8 - (((uint64_t) i) % 8)) % 8)
 
-/*
-    pretty much just an inefficent memcpy
-    copys byte by byte
-*/
-void _byte_cpy(char *dest, const char *src, size_t n) {
-    for (size_t i = 0; i < n; ++i) {
-        dest[i] = src[i];
-    }
-}
+#define alignn(i, n) ((n - (((uint64_t) i) % n)) % n)
 
-
-void *memcpy(void *dest, const void *src, size_t n) {
-    size_t align = align8((unsigned long) dest);
-
-    _byte_cpy(dest, src, align);
-    n -= align;
-
-    long *ldest = (long *) ((char *)dest + align);
-    long *lsrc  = (long *) ((char *)src + align);
-
-    size_t i;
-    for (i = 0; i < n/8; ++i) {
-        ldest[i] = lsrc[i];
-    }
-    n -= 8*i;
-
-    _byte_cpy((char *)(ldest + i), (char *)(lsrc + i), n);
-
-    return dest;
-}
+#endif

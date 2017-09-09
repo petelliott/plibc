@@ -16,6 +16,7 @@ under GPLv3.
 - raise()
 
 #### stdlib.h
+- abort()
 - atoi()
 - exit()
 - malloc()

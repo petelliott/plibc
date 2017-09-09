@@ -18,12 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h>
+#include "../align.h"
 
 #define MALLOC_MAG 0x8a05e5ad623cc4e
 
 #define MIN_SPLIT_SIZE 128 //must be larger than 40 or sizeof(struct block)+8
-
-#define align8(i) ((8 - (((long) i) % 8)) % 8)
 
 struct block {
     struct block *prev;
