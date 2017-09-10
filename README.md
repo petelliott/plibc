@@ -22,6 +22,7 @@ under GPLv3.
 - exit()
 - free()
 - malloc()
+- realloc()
 
 
 #### string.h
