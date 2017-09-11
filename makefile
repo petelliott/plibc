@@ -5,7 +5,9 @@ OBJS= bin/internal/crt0.o bin/internal/syscall.o bin/internal/memory.o\
 	  bin/stdlib/exit.o bin/stdlib/atoi.o bin/stdlib/malloc.o bin/stdlib/free.o bin/stdlib/abort.o bin/stdlib/bsearch.o bin/stdlib/realloc.o\
 	  bin/fcntl/open.o \
 	  bin/string/memcpy.o bin/string/strlen.o bin/string/memset.o \
-	  bin/signal/kill.o bin/signal/raise.o
+	  bin/signal/kill.o bin/signal/raise.o \
+	  bin/time/time.o
+
 
 bin/plibc.a: $(OBJS)
 	ar cr bin/plibc.a $?
@@ -17,7 +19,7 @@ bin/%.o: src/%.s | bin
 	as $< -o $@
 
 bin:
-	mkdir -p bin/internal bin/unistd bin/stdio bin/stdlib bin/fcntl bin/string bin/signal
+	dirname $(OBJS) | sort -u | xargs mkdir -p
 
 .PHONY: clean
 

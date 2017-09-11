@@ -30,6 +30,9 @@ under GPLv3.
 - memset()
 - strlen()
 
+#### time.h
+- time()
+
 #### unistd.h
 - brk()
 - sbrk()
