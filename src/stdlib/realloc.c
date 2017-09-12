@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <string.h>
 #include "../memory.h"
-#include "unistd.h"
+#include <unistd.h>
 
 
 void *realloc(void *ptr, size_t size) {
@@ -35,7 +35,7 @@ void *realloc(void *ptr, size_t size) {
     if (size < mblock->len) {
         shrink_block(mblock, size);
         return ptr;
-    }else if (mblock->next == NULL && mblock == base) {
+    } else if (mblock->next == NULL && mblock == base) {
         sbrk(size - mblock->len);
         mblock->len = size;
         return ptr;
