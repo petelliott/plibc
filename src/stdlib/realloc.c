@@ -28,7 +28,7 @@ void *realloc(void *ptr, size_t size) {
         return malloc(size);
     }
 
-    if ((((long) mblock) ^ mblock->pos_mag) != MALLOC_MAG) {
+    if (!is_mem_block(mblock)) {
         return NULL;
     }
 

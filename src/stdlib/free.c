@@ -27,7 +27,7 @@ void free (void *ptr) {
 
     struct block *mblock = ((struct block *) ptr) -1;
     // check that ptr came from malloc()
-    if ((((long) mblock) ^ mblock->pos_mag) == MALLOC_MAG) {
+    if (is_mem_block(mblock)) {
         mblock->used = 0;
 
         if (mblock->next != NULL && !mblock->next->used) {

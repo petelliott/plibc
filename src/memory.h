@@ -38,5 +38,6 @@ struct block *push_block(size_t size);
 int shrink_block(struct block *mblock, size_t size);
 struct block *get_free_block(size_t size);
 void block_merge_next(struct block *mblock);
+int is_mem_block(struct block *mblock);
 
 #endif

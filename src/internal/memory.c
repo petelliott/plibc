@@ -115,3 +115,11 @@ void block_merge_next(struct block *mblock) {
         mblock->next->prev = mblock;
     }
 }
+
+
+/*
+    detirmines, by the magic number, if a block is valid
+*/
+int is_mem_block(struct block *mblock) {
+    return (((long) mblock) ^ mblock->pos_mag) == MALLOC_MAG;
+}
