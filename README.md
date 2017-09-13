@@ -17,6 +17,7 @@ under GPLv3.
 
 #### stdio.h
 - fopen()
+- fread()
 - fwrite()
 
 #### stdlib.h
