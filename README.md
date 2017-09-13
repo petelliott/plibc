@@ -15,6 +15,9 @@ under GPLv3.
 - kill()
 - raise()
 
+#### stdio.h
+- fopen()
+
 #### stdlib.h
 - abort()
 - atoi()

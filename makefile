@@ -6,7 +6,8 @@ OBJS= bin/internal/crt0.o bin/internal/syscall.o bin/internal/memory.o\
 	  bin/fcntl/open.o \
 	  bin/string/memcpy.o bin/string/strlen.o bin/string/memset.o \
 	  bin/signal/kill.o bin/signal/raise.o \
-	  bin/time/time.o
+	  bin/time/time.o \
+	  bin/stdio/fopen.o
 
 
 bin/plibc.a: $(OBJS)
