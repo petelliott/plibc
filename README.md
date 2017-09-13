@@ -16,6 +16,7 @@ under GPLv3.
 - raise()
 
 #### stdio.h
+- fclose()
 - fopen()
 - fread()
 - fwrite()
