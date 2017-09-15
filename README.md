@@ -18,6 +18,7 @@ under GPLv3.
 #### stdio.h
 - fclose()
 - fopen()
+- fputc()
 - fread()
 - fwrite()
 
