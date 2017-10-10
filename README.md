@@ -29,7 +29,9 @@ under GPLv3.
 - exit()
 - free()
 - malloc()
+- rand()
 - realloc()
+- srand()
 
 
 #### string.h
