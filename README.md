@@ -11,6 +11,9 @@ under GPLv3.
 #### fcntl.h
 - open()
 
+#### math.h
+- sin()
+
 #### signal.h
 - kill()
 - raise()
