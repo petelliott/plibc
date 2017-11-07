@@ -19,10 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>
 #include <stdint.h>
 
+#include <../plibc_io.h>
+
 
 // TODO: buffering
 size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    ssize_t status = read(stream->_fileno, ptr, size*nmemb);
+    struct plibc_file *pstream = (struct plibc_file *) stream;
+    ssize_t status = read(pstream->filed, ptr, size*nmemb);
 
     if (status < 0) {
         // TODO: figure out ferror and feof

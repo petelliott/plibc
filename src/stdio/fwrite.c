@@ -18,11 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <unistd.h>
 #include <stdint.h>
+#include "../plibc_io.h"
 
 
 // TODO: buffering
 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    ssize_t status = write(stream->_fileno, ptr, size*nmemb);
+    struct plibc_file *pstream = (struct plibc_file *) stream;
+    ssize_t status = write(pstream->filed, ptr, size*nmemb);
 
     if (status < 0) {
         // TODO: figure out ferror and feof

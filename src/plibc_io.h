@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define IO_BUFF_SIZE 4096
+#define PLIBC_BUFF_SIZE 4096
 
 struct plibc_file {
     int filed;

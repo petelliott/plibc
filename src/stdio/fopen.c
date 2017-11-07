@@ -18,11 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <../plibc_io.h>
 
 
 // TODO: buffering
 FILE *fopen(const char *path, const char *mode) {
-    FILE *fil = malloc(sizeof(FILE));
+    struct plibc_file *fil = malloc(sizeof(FILE));
     int unistd_mode = 0;
 
     if (mode[0] == 'r') {
@@ -39,6 +40,8 @@ FILE *fopen(const char *path, const char *mode) {
         unistd_mode |= O_APPEND;
     }
 
-    fil->_fileno = open(path, unistd_mode | O_CREAT, 0666);
-    return fil;
+    fil->filed = open(path, unistd_mode | O_CREAT, 0666);
+    fil->writebuffer = malloc(PLIBC_BUFF_SIZE);
+    fil->write_idx = 0;
+    return (FILE *)fil;
 }
