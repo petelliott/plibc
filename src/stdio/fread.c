@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>
 #include <stdint.h>
 
-#include <../plibc_io.h>
+#include "../plibc_io.h"
 
 
 // TODO: buffering

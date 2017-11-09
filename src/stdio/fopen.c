@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <../plibc_io.h>
+#include "../plibc_io.h"
 
 
 // TODO: buffering

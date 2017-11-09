@@ -28,8 +28,8 @@ size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) {
 
     ssize_t status;
     if (size*nmemb + pstream->write_idx <= PLIBC_BUFF_SIZE) {
-        memcpy(pstream->writebuffer+pstream->write_idx, prt, size*nmemb);
-        writebuffer += size*nmemb
+        memcpy(pstream->writebuffer+pstream->write_idx, ptr, size*nmemb);
+        pstream-> write_idx += size*nmemb;
         status = size*nmemb;
     } else {
         status =  write(pstream->filed, pstream->writebuffer, pstream->write_idx);
