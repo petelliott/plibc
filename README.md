@@ -20,6 +20,7 @@ under GPLv3.
 
 #### stdio.h
 - fclose()
+- fflush()
 - fopen()
 - fputc()
 - fread()
