@@ -19,10 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "../plibc_io.h"
+
 
 // TODO: buffering
 int fclose(FILE *stream) {
-    int status = close(stream->_fileno);
-    free(stream);
+    struct plibc_file *pstream = (struct plibc_file *) stream;
+    int status = close(pstream->filed);
+    free(pstream->writebuffer);
+    free(pstream);
     return status;
 }

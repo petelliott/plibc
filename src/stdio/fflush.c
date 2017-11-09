@@ -1,5 +1,5 @@
 /*
-fread <stdio.h>
+fflush <stdio.h>
 Copyright (C) 2017  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify
@@ -16,21 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <stdio.h>
+#include <stddef.h>
 #include <unistd.h>
-#include <stdint.h>
 
 #include "../plibc_io.h"
 
 
-// TODO: buffering
-size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream) {
+int fflush(FILE *stream) {
     struct plibc_file *pstream = (struct plibc_file *) stream;
-    ssize_t status = read(pstream->filed, ptr, size*nmemb);
 
-    if (status < 0) {
-        // TODO: figure out ferror and feof
-        return 0;
-    } else {
-        return status;
-    }
+    ssize_t status = write(pstream->filed, pstream->writebuffer, pstream->write_idx);
+    pstream->write_idx = 0;
+    return (status < 0)? EOF:0;
 }
