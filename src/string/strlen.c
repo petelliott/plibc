@@ -19,7 +19,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 size_t strlen(const char *str) {
+    size_t align = 0;
+
+    while ((unsigned long)(str+align) % sizeof(long) != 0) {
+        align++;
+        if (str[align] == 0) {
+            return align;
+        }
+    }
+    
+    // set magic numbers for hasless based on system word size
+    unsigned long highword;
+    unsigned long lowword;
+    if (sizeof(long) == 4) {
+        highword = 0x80808080UL;
+        lowword = 0x01010101UL;
+    } else if (sizeof(long) == 8) {
+        highword = 0x8080808080808080UL;
+        lowword = 0x0101010101010101UL;
+    }
+
+    unsigned long *long_ptr = (unsigned long *) (str + align);
+
+    // hasless: https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
     size_t i;
-    for (i = 0; str[i] != 0; ++i) {}
-    return i;
+    for (i = 0; ((long_ptr[i] - lowword) & ~long_ptr[i] & highword) == 0; ++i) {}
+
+    unsigned long word = long_ptr[i+1];
+    // check which byte was zero
+    for (size_t j = 0; j < sizeof(long); ++j) {
+        if ((word & (0xff << 8*j)) == 0) {
+            return align + i*sizeof(long) + j;
+        }
+    }
+
+    // shouldn't happen
+    return 0;
 }
