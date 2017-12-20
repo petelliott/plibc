@@ -42,14 +42,15 @@ size_t strlen(const char *str) {
     unsigned long *long_ptr = (unsigned long *) (str + align);
 
     // hasless: https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
-    size_t i;
-    for (i = 0; ((long_ptr[i] - lowword) & ~long_ptr[i] & highword) == 0; ++i) {}
+    unsigned long word;
+    do {
+        word = *(long_ptr++);
+    } while(((word - lowword) & ~word & highword) == 0);
 
-    unsigned long word = long_ptr[i+1];
     // check which byte was zero
     for (size_t j = 0; j < sizeof(long); ++j) {
         if ((word & (0xff << 8*j)) == 0) {
-            return align + i*sizeof(long) + j;
+            return (unsigned long)(long_ptr) - (unsigned long)(str) + j;
         }
     }
 
