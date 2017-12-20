@@ -1,6 +1,5 @@
 /*
 strlen
-the _plibc_syscall function that makes syscalls available in c
 Copyright (C) 2017  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify

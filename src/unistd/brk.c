@@ -33,6 +33,7 @@ int brk (void *addr) {
 
 
 void *sbrk (intptr_t delta) {
+#pragma GCC diagnostic ignored "-Wunused-result"
     if (currbrk == 0) {
         brk(NULL);
     }
@@ -44,4 +45,5 @@ void *sbrk (intptr_t delta) {
     void * oldbrk = currbrk;
     brk(currbrk+delta);
     return oldbrk;
+#pragma GCC diagnostic pop
 }
