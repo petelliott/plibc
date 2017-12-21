@@ -18,10 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PRINTF_INT_H
 #define PRINTF_INT_H
 
-void fn_printf(void (*_wch)(char), const char *fmt, ...);
 
-void fn_prnt_long(void (*_wch)(char), long l);
-void fn_prnt_str(void (*_wch)(char), const char *str);
-void fn_prnt_char(void (*_wch)(char), char c);
 
 #endif
