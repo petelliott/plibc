@@ -4,7 +4,7 @@ mkdir -p test/bin
 
 
 run_test() {
-    gcc -Wall -nostdlib test/$1.c bin/plibc.a -o test/bin/$1 
+    gcc -Wall -nostdlib -std=gnu99 test/$1.c bin/plibc.a -o test/bin/$1 
     test/bin/$1
     if [ $? == 0 ]
     then
