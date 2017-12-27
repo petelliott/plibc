@@ -1,0 +1,6 @@
+language: cpp
+dist: trusty
+
+script:
+    - make
+    - test/test.sh
