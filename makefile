@@ -1,4 +1,4 @@
-CC= gcc -nostdlib -Wall -O2
+CC= gcc -nostdlib -Wall -std=gnu99
 
 OBJS= bin/internal/crt0.o bin/internal/syscall.o bin/internal/memory.o bin/internal/stdiostrm.o\
       bin/unistd/write.o bin/unistd/read.o bin/unistd/brk.o bin/unistd/close.o bin/unistd/getpid.o \
